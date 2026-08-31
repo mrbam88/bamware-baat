@@ -1,0 +1,12 @@
+appId: com.example.baat
+---
+- runFlow: login.yaml
+
+- tapOn:
+    id: "tab-matches"
+
+- extendedWaitUntil:
+    visible: "Matches"
+    timeout: 8000
+
+- assertVisible: "Matches"

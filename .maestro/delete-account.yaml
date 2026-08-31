@@ -1,0 +1,51 @@
+appId: com.example.baat
+---
+# Account-deletion UI (issue #18, Apple 5.1.1(v)) — walks the double-confirm
+# flow but deliberately CANCELS before the final confirm so no account is
+# ever deleted by automation. The destructive path is verified manually with
+# a throwaway persona (see issue #18 acceptance criteria).
+- runFlow: login.yaml
+
+- tapOn:
+    id: "tab-profile"
+
+- scroll
+
+- extendedWaitUntil:
+    visible:
+      id: "settings-row-account"
+    timeout: 8000
+
+- tapOn:
+    id: "settings-row-account"
+
+- extendedWaitUntil:
+    visible:
+      id: "account-delete"
+    timeout: 8000
+
+- tapOn:
+    id: "account-delete"
+
+# Step 1 — explanation screen
+- assertVisible: "This cannot be undone"
+
+- tapOn:
+    id: "delete-account-continue"
+
+# Step 2 — typed-DELETE confirmation
+- extendedWaitUntil:
+    visible:
+      id: "delete-account-confirm-input"
+    timeout: 5000
+
+- assertVisible: "Permanently delete my account"
+
+# Never confirm in automation — cancel back out.
+- tapOn:
+    id: "delete-account-cancel"
+
+- extendedWaitUntil:
+    visible:
+      id: "account-delete"
+    timeout: 5000

@@ -1,0 +1,26 @@
+appId: com.example.baat
+---
+- runFlow: login.yaml
+
+# Land on discover, open the first card's full profile via its photo
+- tapOn:
+    id: "tab-discover"
+- assertVisible: "Baat"
+- tapOn:
+    id: "hinge-photo-tap"
+    index: 0
+
+# Full profile detail: photo pager + like/pass actions, tab bar still present
+- assertVisible:
+    id: "person-detail"
+- assertVisible:
+    id: "person-like"
+- assertVisible:
+    id: "person-pass"
+- assertVisible:
+    id: "tab-discover"
+
+# Back returns to the discover feed
+- tapOn:
+    id: "person-back"
+- assertVisible: "Baat"

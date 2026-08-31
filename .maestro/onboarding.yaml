@@ -1,0 +1,116 @@
+appId: com.example.baat
+# Onboarding wizard — cultural steps (issue #3).
+#
+# Covers: looking-for → languages → roots → faith → family → tags, including
+# one back-navigation check, ending on the authenticated app shell.
+#
+# Credentials come from the environment (never hardcode):
+#   MAESTRO_TEST_EMAIL=... MAESTRO_TEST_PASSWORD=... maestro test .maestro/onboarding.yaml
+#
+# PRECONDITION: the test account is mid-onboarding — profile created, at least
+# one photo uploaded, fewer than 3 tags saved. AuthGate then resumes the wizard
+# at the first cultural step. (Photo upload itself goes through the OS photo
+# picker and is not automatable here.)
+---
+- launchApp
+
+- extendedWaitUntil:
+    visible: "Baat"
+    timeout: 15000
+
+# Sign in if we're on the welcome screen (same pattern as login.yaml)
+- runFlow:
+    when:
+      visible: "Sign in"
+    commands:
+      - tapOn: "Sign in"
+      - extendedWaitUntil:
+          visible:
+            id: "email-input"
+          timeout: 5000
+      - tapOn:
+          id: "email-input"
+      - inputText: ${MAESTRO_TEST_EMAIL}
+      - tapOn: "BAAT!"
+      - tapOn:
+          id: "password-input"
+      - inputText: ${MAESTRO_TEST_PASSWORD}
+      - tapOn: "Sign in"
+
+# Step 3 — what I'm looking for (single-select)
+- extendedWaitUntil:
+    visible: "What are you looking for?"
+    timeout: 20000
+- tapOn:
+    id: "looking-for-serious"
+- tapOn:
+    id: "looking-for-continue"
+
+# Step 4 — languages (multi-select)
+- extendedWaitUntil:
+    visible: "Languages that feel like home"
+    timeout: 10000
+
+# Back-nav must work: return to looking-for, then continue again
+- tapOn:
+    id: "back-button"
+- extendedWaitUntil:
+    visible: "What are you looking for?"
+    timeout: 10000
+- tapOn:
+    id: "looking-for-continue"
+- extendedWaitUntil:
+    visible: "Languages that feel like home"
+    timeout: 10000
+
+- tapOn:
+    id: "language-urdu"
+- tapOn:
+    id: "language-english"
+- tapOn:
+    id: "languages-continue"
+
+# Step 5 — roots (multi-select, diaspora welcome)
+- extendedWaitUntil:
+    visible: "Where's your family from?"
+    timeout: 10000
+- tapOn:
+    id: "roots-punjab"
+- tapOn:
+    id: "roots-diaspora-born"
+- tapOn:
+    id: "roots-continue"
+
+# Step 6 — faith (single-select)
+- extendedWaitUntil:
+    visible: "Faith & beliefs"
+    timeout: 10000
+- tapOn:
+    id: "faith-prefer-not-to-say"
+- tapOn:
+    id: "faith-continue"
+
+# Step 7 — family involvement (single-select)
+- extendedWaitUntil:
+    visible: "Family involvement"
+    timeout: 10000
+- tapOn:
+    id: "family-when-serious"
+- tapOn:
+    id: "family-continue"
+
+# Step 8 — tags (existing final step)
+- extendedWaitUntil:
+    visible: "Pick your interests"
+    timeout: 10000
+- tapOn: "hiking"
+- tapOn: "cooking"
+- tapOn: "music"
+- tapOn:
+    id: "tags-finish"
+
+# Wizard complete — authenticated app shell
+- extendedWaitUntil:
+    visible:
+      id: "tab-discover"
+    timeout: 20000

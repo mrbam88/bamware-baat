@@ -1,0 +1,60 @@
+# App Store screenshot run. Use a seeded demo account with a profile,
+# at least one match with messages, and 2+ discoverable profiles.
+#   MAESTRO_TEST_EMAIL=... MAESTRO_TEST_PASSWORD=... \
+#     maestro --udid <6.9" sim> test .maestro/store-screenshots.yaml
+appId: com.example.baat
+---
+- launchApp:
+    clearState: true
+
+- extendedWaitUntil:
+    visible: "Baat"
+    timeout: 20000
+
+- takeScreenshot: shots/01-welcome
+
+- tapOn: "Sign in"
+- extendedWaitUntil:
+    visible:
+      id: "email-input"
+    timeout: 5000
+- tapOn:
+    id: "email-input"
+- inputText: ${MAESTRO_TEST_EMAIL}
+- tapOn: "BAAT!"
+- tapOn:
+    id: "password-input"
+- inputText: ${MAESTRO_TEST_PASSWORD}
+- tapOn: "Sign in"
+
+- extendedWaitUntil:
+    visible:
+      id: "tab-matches"
+    timeout: 20000
+
+# Discover feed (give images/scores a beat to settle)
+- extendedWaitUntil:
+    notVisible: "Sign in"
+    timeout: 5000
+- takeScreenshot: shots/02-discover
+
+# Matches + chat with icebreaker
+- tapOn:
+    id: "tab-matches"
+- extendedWaitUntil:
+    visible: "Your matches"
+    timeout: 10000
+- takeScreenshot: shots/03-matches
+- tapOn: "Noor"
+- extendedWaitUntil:
+    visible: "break the ice"
+    timeout: 10000
+- takeScreenshot: shots/04-chat
+
+# Profile
+- tapOn:
+    id: "tab-profile"
+- extendedWaitUntil:
+    visible: "Your profile"
+    timeout: 10000
+- takeScreenshot: shots/05-profile

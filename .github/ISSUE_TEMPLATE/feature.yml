@@ -1,0 +1,38 @@
+name: Feature request
+description: Spec a change — issues here double as agent-ready specs
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: Story
+      description: Who wants this and why, in one or two sentences.
+      placeholder: As a user with several matches, I can reorder my profile photos so my best one shows first.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What changes, concretely — screens, files, endpoints.
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope
+      description: What this issue explicitly does not touch.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Checkable statements — what proves it's done.
+      placeholder: |
+        - [ ] Photos can be dragged into a new order on the profile screen
+        - [ ] Order persists after app restart
+        - [ ] `yarn test` and `npx tsc --noEmit` pass
+    validations:
+      required: true

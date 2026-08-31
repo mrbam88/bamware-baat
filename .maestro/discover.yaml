@@ -1,0 +1,14 @@
+appId: com.example.baat
+---
+- runFlow: login.yaml
+
+# Should land on discover by default
+- tapOn:
+    id: "tab-discover"
+
+- assertVisible: "Baat"
+
+# Switch to swipe mode
+- tapOn:
+    id: "tab-discover"
+- assertVisible: "Baat"

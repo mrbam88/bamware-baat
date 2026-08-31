@@ -1,0 +1,55 @@
+appId: com.example.baat
+---
+- launchApp
+
+- extendedWaitUntil:
+    visible: "Baat"
+    timeout: 15000
+
+- runFlow:
+    when:
+      visible:
+        id: "tab-matches"
+    commands:
+      - tapOn:
+          id: "tab-profile"
+      - scroll
+      - scroll
+      - extendedWaitUntil:
+          visible:
+            id: "sign-out-button"
+          timeout: 8000
+      - tapOn:
+          id: "sign-out-button"
+      - extendedWaitUntil:
+          visible: "Sign in"
+          timeout: 10000
+
+- assertVisible: "Sign in"
+- assertVisible: "Baat"
+
+# Welcome screen shows the CTA first — tap "Sign in" to reveal the form
+- tapOn: "Sign in"
+- extendedWaitUntil:
+    visible:
+      id: "email-input"
+    timeout: 5000
+
+# Credentials come from the environment: run with
+#   MAESTRO_TEST_EMAIL=... MAESTRO_TEST_PASSWORD=... maestro test .maestro/login.yaml
+- tapOn:
+    id: "email-input"
+# Remember-me (issue #17) may have prefilled the field from a previous run —
+# clear it so inputText doesn't append to a stored address.
+- eraseText
+- inputText: ${MAESTRO_TEST_EMAIL}
+- tapOn: "BAAT!"
+- tapOn:
+    id: "password-input"
+- inputText: ${MAESTRO_TEST_PASSWORD}
+- tapOn: "Sign in"
+
+- extendedWaitUntil:
+    notVisible: "Sign in"
+    timeout: 20000
+- assertVisible: "Baat"

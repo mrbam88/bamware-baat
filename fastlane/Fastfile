@@ -1,0 +1,9 @@
+default_platform(:ios)
+
+require_relative "lib/config"
+require_relative "lib/helpers"
+
+import "lanes/hooks.rb"
+import "lanes/eas.rb"
+import "lanes/versions.rb"
+import "lanes/native.rb"

@@ -1,0 +1,38 @@
+name: Bug report
+description: Something in the app is broken
+title: "bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+      placeholder: Tapping "Match" on the discover screen shows a spinner forever; expected the match modal.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Log in with a fresh account
+        2. Complete onboarding
+        3. On Discover, tap ...
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Platform + how you're running it.
+      placeholder: "iOS 18 simulator, dev client via `yarn ios`"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Logs, screenshots, or a failing test / Maestro flow. Never paste tokens or credentials.
+    validations:
+      required: false

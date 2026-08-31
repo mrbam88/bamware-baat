@@ -1,0 +1,16 @@
+appId: com.example.baat
+---
+- runFlow: login.yaml
+
+- tapOn:
+    id: "tab-profile"
+
+- extendedWaitUntil:
+    visible:
+      id: "profile-email"
+    timeout: 8000
+
+- assertVisible: "${MAESTRO_TEST_EMAIL}"
+- assertVisible: "Profile"
+- assertVisible:
+    id: "sign-out-button"

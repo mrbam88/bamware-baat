@@ -1,0 +1,16 @@
+
+# iOS bundle id (from app.json -> ios.bundleIdentifier)
+app_identifier "com.example.baat"
+
+apple_id "apple-id@example.com"
+
+package_name "com.example.baat"
+
+itc_team_id "YOUR_TEAM_ID"
+
+ENV["FASTLANE_USER"] = "apple-id@example.com"
+# Store uploads authenticate with an App Store Connect API key from env
+# (app-specific passwords are retired — see SECURITY.md, docs/RELEASING.md):
+#   ASC_KEY_ID / ASC_ISSUER_ID / ASC_KEY_P8_B64
+# Android native submit additionally needs SUPPLY_JSON_KEY (path to the
+# Play service-account JSON). Never commit any of these values.
